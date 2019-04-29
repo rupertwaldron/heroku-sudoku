@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang=en xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sudoku Board</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style type="text/css">
+
+        html, body {
+            background-color: #FAFAFA
+        }
+        table {
+            border: 2px solid #000000;
+        }
+        td {
+            border: 1px solid #000000;
+            text-align: center;
+            vertical-align: middle;
+        }
+        input {
+            color: #000000;
+            padding: 0;
+            border: 0;
+            text-align: center;
+            align-content: center;
+            width: 48px;
+            height: 48px;
+            font-size: 24px;
+            background-color: #FFFFFF;
+            outline: none;
+        }
+        input:disabled {
+            background-color: #EEEEEE;
+        }
+        button {
+            margin-top: 20px;
+        }
+
+        #cell-0,  #cell-1,  #cell-2  { border-top:    2px solid #000000; }
+        #cell-2,  #cell-11, #cell-20 { border-right:  2px solid #000000; }
+        #cell-18, #cell-19, #cell-20 { border-bottom: 2px solid #000000; }
+        #cell-0,  #cell-9,  #cell-18 { border-left:   2px solid #000000; }
+        #cell-3,  #cell-4,  #cell-5  { border-top:    2px solid #000000; }
+        #cell-5,  #cell-14, #cell-23 { border-right:  2px solid #000000; }
+        #cell-21, #cell-22, #cell-23 { border-bottom: 2px solid #000000; }
+        #cell-3,  #cell-12, #cell-21 { border-left:   2px solid #000000; }
+        #cell-6,  #cell-7,  #cell-8  { border-top:    2px solid #000000; }
+        #cell-8,  #cell-17, #cell-26 { border-right:  2px solid #000000; }
+        #cell-24, #cell-25, #cell-26 { border-bottom: 2px solid #000000; }
+        #cell-6,  #cell-15, #cell-24 { border-left:   2px solid #000000; }
+        #cell-27, #cell-28, #cell-29 { border-top:    2px solid #000000; }
+        #cell-29, #cell-38, #cell-47 { border-right:  2px solid #000000; }
+        #cell-45, #cell-46, #cell-47 { border-bottom: 2px solid #000000; }
+        #cell-27, #cell-36, #cell-45 { border-left:   2px solid #000000; }
+        #cell-30, #cell-31, #cell-32 { border-top:    2px solid #000000; }
+        #cell-32, #cell-41, #cell-50 { border-right:  2px solid #000000; }
+        #cell-48, #cell-49, #cell-50 { border-bottom: 2px solid #000000; }
+        #cell-30, #cell-39, #cell-48 { border-left:   2px solid #000000; }
+        #cell-33, #cell-34, #cell-35 { border-top:    2px solid #000000; }
+        #cell-35, #cell-44, #cell-53 { border-right:  2px solid #000000; }
+        #cell-51, #cell-52, #cell-53 { border-bottom: 2px solid #000000; }
+        #cell-33, #cell-42, #cell-51 { border-left:   2px solid #000000; }
+        #cell-54, #cell-55, #cell-56 { border-top:    2px solid #000000; }
+        #cell-56, #cell-65, #cell-74 { border-right:  2px solid #000000; }
+        #cell-72, #cell-73, #cell-74 { border-bottom: 2px solid #000000; }
+        #cell-54, #cell-63, #cell-72 { border-left:   2px solid #000000; }
+        #cell-57, #cell-58, #cell-59 { border-top:    2px solid #000000; }
+        #cell-59, #cell-68, #cell-77 { border-right:  2px solid #000000; }
+        #cell-75, #cell-76, #cell-77 { border-bottom: 2px solid #000000; }
+        #cell-57, #cell-66, #cell-75 { border-left:   2px solid #000000; }
+        #cell-60, #cell-61, #cell-62 { border-top:    2px solid #000000; }
+        #cell-62, #cell-71, #cell-80 { border-right:  2px solid #000000; }
+        #cell-78, #cell-79, #cell-80 { border-bottom: 2px solid #000000; }
+        #cell-60, #cell-69, #cell-78 { border-left:   2px solid #000000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Sudoku Board</h1>
+
+    <form id="sudoku-form" action="sudoku" method="post">
+
+        <table id="grid" >
+
+            <tr>
+                <td><input id="cell-0" th:value="${cellValues[0]}" name="cell"></td>
+                <td><input id="cell-1" th:value="${cellValues[1]}" name="cell"></td>
+                <td><input id="cell-2" th:value="${cellValues[2]}" name="cell"></td>
+
+                <td><input id="cell-3" th:value="${cellValues[3]}" name="cell"></td>
+                <td><input id="cell-4" th:value="${cellValues[4]}" name="cell"></td>
+                <td><input id="cell-5" th:value="${cellValues[5]}" name="cell"></td>
+
+                <td><input id="cell-6" th:value="${cellValues[6]}" name="cell"></td>
+                <td><input id="cell-7" th:value="${cellValues[7]}" name="cell"></td>
+                <td><input id="cell-8" th:value="${cellValues[8]}" name="cell"></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-9"  th:value="${cellValues[9]}" name="cell" ></td>
+                <td><input id="cell-10" th:value="${cellValues[10]}" name="cell" ></td>
+                <td><input id="cell-11" th:value="${cellValues[11]}" name="cell" ></td>
+
+                <td><input id="cell-12" th:value="${cellValues[12]}" name="cell" ></td>
+                <td><input id="cell-13" th:value="${cellValues[13]}" name="cell" ></td>
+                <td><input id="cell-14" th:value="${cellValues[14]}" name="cell" ></td>
+
+                <td><input id="cell-15" th:value="${cellValues[15]}" name="cell" ></td>
+                <td><input id="cell-16" th:value="${cellValues[16]}" name="cell" ></td>
+                <td><input id="cell-17" th:value="${cellValues[17]}" name="cell" ></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-18" th:value="${cellValues[18]}" name="cell" ></td>
+                <td><input id="cell-19" th:value="${cellValues[19]}" name="cell" ></td>
+                <td><input id="cell-20" th:value="${cellValues[20]}" name="cell" ></td>
+
+                <td><input id="cell-21" th:value="${cellValues[21]}" name="cell" ></td>
+                <td><input id="cell-22" th:value="${cellValues[22]}" name="cell" ></td>
+                <td><input id="cell-23" th:value="${cellValues[23]}" name="cell" ></td>
+
+                <td><input id="cell-24" th:value="${cellValues[24]}" name="cell" ></td>
+                <td><input id="cell-25" th:value="${cellValues[25]}" name="cell" ></td>
+                <td><input id="cell-26" th:value="${cellValues[26]}" name="cell" ></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-27" th:value="${cellValues[27]}" name="cell" ></td>
+                <td><input id="cell-28" th:value="${cellValues[28]}" name="cell" ></td>
+                <td><input id="cell-29" th:value="${cellValues[29]}" name="cell" ></td>
+
+                <td><input id="cell-30" th:value="${cellValues[30]}" name="cell" ></td>
+                <td><input id="cell-31" th:value="${cellValues[31]}" name="cell" ></td>
+                <td><input id="cell-32" th:value="${cellValues[32]}" name="cell" ></td>
+
+                <td><input id="cell-33" th:value="${cellValues[33]}" name="cell" ></td>
+                <td><input id="cell-34" th:value="${cellValues[34]}" name="cell" ></td>
+                <td><input id="cell-35" th:value="${cellValues[35]}" name="cell" ></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-36" th:value="${cellValues[36]}" name="cell" ></td>
+                <td><input id="cell-37" th:value="${cellValues[37]}" name="cell" ></td>
+                <td><input id="cell-38" th:value="${cellValues[38]}" name="cell" ></td>
+
+                <td><input id="cell-39" th:value="${cellValues[39]}" name="cell" ></td>
+                <td><input id="cell-40" th:value="${cellValues[40]}" name="cell" ></td>
+                <td><input id="cell-41" th:value="${cellValues[41]}" name="cell" ></td>
+
+                <td><input id="cell-42" th:value="${cellValues[42]}" name="cell" ></td>
+                <td><input id="cell-43" th:value="${cellValues[43]}" name="cell" ></td>
+                <td><input id="cell-44" th:value="${cellValues[44]}" name="cell" ></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-45" th:value="${cellValues[45]}" name="cell" ></td>
+                <td><input id="cell-46" th:value="${cellValues[46]}" name="cell" ></td>
+                <td><input id="cell-47" th:value="${cellValues[47]}" name="cell" ></td>
+
+                <td><input id="cell-48" th:value="${cellValues[48]}" name="cell" ></td>
+                <td><input id="cell-49" th:value="${cellValues[49]}" name="cell" ></td>
+                <td><input id="cell-50" th:value="${cellValues[50]}" name="cell" ></td>
+
+                <td><input id="cell-51" th:value="${cellValues[51]}" name="cell" ></td>
+                <td><input id="cell-52" th:value="${cellValues[52]}" name="cell" ></td>
+                <td><input id="cell-53" th:value="${cellValues[53]}" name="cell" ></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-54" th:value="${cellValues[54]}" name="cell"></td>
+                <td><input id="cell-55" th:value="${cellValues[55]}" name="cell"></td>
+                <td><input id="cell-56" th:value="${cellValues[56]}" name="cell"></td>
+
+                <td><input id="cell-57" th:value="${cellValues[57]}" name="cell"></td>
+                <td><input id="cell-58" th:value="${cellValues[58]}" name="cell"></td>
+                <td><input id="cell-59" th:value="${cellValues[59]}" name="cell"></td>
+
+                <td><input id="cell-60" th:value="${cellValues[60]}" name="cell"></td>
+                <td><input id="cell-61" th:value="${cellValues[61]}" name="cell"></td>
+                <td><input id="cell-62" th:value="${cellValues[62]}" name="cell"></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-63" th:value="${cellValues[63]}" name="cell"></td>
+                <td><input id="cell-64" th:value="${cellValues[64]}" name="cell"></td>
+                <td><input id="cell-65" th:value="${cellValues[65]}" name="cell"></td>
+
+                <td><input id="cell-66" th:value="${cellValues[66]}" name="cell"></td>
+                <td><input id="cell-67" th:value="${cellValues[67]}" name="cell"></td>
+                <td><input id="cell-68" th:value="${cellValues[68]}" name="cell"></td>
+
+                <td><input id="cell-69" th:value="${cellValues[69]}" name="cell"></td>
+                <td><input id="cell-70" th:value="${cellValues[70]}" name="cell"></td>
+                <td><input id="cell-71" th:value="${cellValues[71]}" name="cell"></td>
+            </tr>
+
+            <tr>
+                <td><input id="cell-72" th:value="${cellValues[72]}" name="cell"></td>
+                <td><input id="cell-73" th:value="${cellValues[73]}" name="cell"></td>
+                <td><input id="cell-74" th:value="${cellValues[74]}" name="cell"></td>
+
+                <td><input id="cell-75" th:value="${cellValues[75]}" name="cell"></td>
+                <td><input id="cell-76" th:value="${cellValues[76]}" name="cell"></td>
+                <td><input id="cell-77" th:value="${cellValues[77]}" name="cell"></td>
+
+                <td><input id="cell-78" th:value="${cellValues[78]}" name="cell"></td>
+                <td><input id="cell-79" th:value="${cellValues[79]}" name="cell"></td>
+                <td><input id="cell-80" th:value="${cellValues[80]}" name="cell"></td>
+            </tr>
+
+        </table>
+    </form>
+    <button type="submit" form="sudoku-form" value="Submit">Submit</button>
+    <button type="submit"><a th:href="@{__${T(com.ruppyrup.herokusudoku.util.GameMappings).RESTART}__}">Reset</a></button>
+</div>
+
+
+<footer>
+    <p>Created by RuppyRup</p>
+</footer>
+
+</body>
+
+</html>
