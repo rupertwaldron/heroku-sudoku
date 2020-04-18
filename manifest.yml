@@ -1,7 +1,7 @@
 ---
 applications:
   - name: heroku-sudoku
-    memory: 768M
+    memory: 4G
     instances: 1
     random-route: true
     buildpacks:
