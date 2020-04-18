@@ -4,5 +4,6 @@ applications:
     memory: 1G
     instances: 1
     random-route: true
-    buildpacks:
-      - https://github.com/cloudfoundry/java-buildpack.git
+    path: target/heroku-sudoku-0.0.1-SNAPSHOT.jar
+#    buildpacks:
+#      - https://github.com/cloudfoundry/java-buildpack.git
